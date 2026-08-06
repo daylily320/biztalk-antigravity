@@ -118,10 +118,10 @@ AI도 사람도 "끝"의 기준이 명확해야 헤매지 않습니다. 기준 �
 | 프론트엔드 | HTML5 / CSS3 / JavaScript (ES6+) | 프레임워크 없음 |
 | 백엔드 | Python 3.11+ / FastAPI / Uvicorn | |
 | AI 연동 | 최신 langchain / langchain-upstage | |
-| AI 모델 | Upstage Solar-Pro3 | |
+| AI 모델명 | Upstage `solar-pro3` | |
 | 환경 변수 | python-dotenv | `.env` 파일 관리 |
 | 버전 관리 | Git / GitHub | |
-| 배포 | Vercel | 프론트엔드와 백엔드 배포 |
+| 배포 | Vercel | 프론트엔드와 백엔드 같이 배포 |
 
 ### 사전 준비
 
@@ -203,6 +203,7 @@ PROMPTS = {
 ```
 biztalk_antigravity/
 │
+├── .venv/                      # 가상환경 
 ├── backend/
 │   ├── main.py                 # FastAPI 앱 + CORS 설정
 │   ├── routers/
@@ -213,8 +214,6 @@ biztalk_antigravity/
 │   │   └── templates.py        # 대상별 프롬프트 템플릿
 │   ├── models/
 │   │   └── schemas.py          # Pydantic 요청/응답 스키마
-│   ├── .env                    # API 키 (git 제외)
-│   ├── .env.example            # 환경 변수 샘플 (git 포함)
 │   └── requirements.txt
 │
 ├── frontend/
@@ -297,20 +296,22 @@ FastAPI는 Swagger UI를 기본 제공하므로 서버가 기동 중인 상태�
 2. 디렉토리 구조 생성
 3. `.gitignore` 작성 — `.env` 반드시 포함
 4. Upstage API 키 발급 및 `.env` 파일 작성
-5. `requirements.txt` 작성하고 의존성의 버전(use context7)을 명시해야 함
-6. 가상환경(`venv`) 폴더를 생성하고 `requirements.txt` 명시된 의존성을 가상환경에 설치해야 함
+5. `backend/requirements.txt` 작성하고 의존성의 최신 버전(use context7)을 명시해야 함
+6. 가상환경(`.venv`) 폴더를 생성하고 `backend/requirements.txt` 명시된 의존성을 가상환경 폴더에 설치해야 함
 
 ---
 
 ### [ ] STEP 2. 백엔드 구현 
 
 > 원칙 2 적용: 구현 전 Solar-Pro3 연동 방식을 먼저 확인하세요.
+- Upstage 공식 문서를 반드시 먼저 확인하세요 [Upstage Console](https://console.upstage.ai/)
 
 **구현 순서**
 
 1. `schemas.py` — 데이터 모델 정의(요청/응답 데이터 모델 정의)
 2. `templates.py` — 프롬프트 템플릿 작성(수신 대상별 프롬프트 템플릿 작성)
-3. `tone_converter.py` — 핵심 변환 로직 구현(LangChain + Solar-Pro2 연동)
+3. `tone_converter.py` — 핵심 변환 로직 구현(LangChain + Solar-Pro3 연동)
+    * model="solar-pro3"
 4. `convert.py` — API 라우터 구현
 5. `main.py` — 메인 앱 설정(FastAPI 앱 + CORS 설정)
 6. 로컬 서버 실행 및 테스트 (`uvicorn main:app --reload`)
