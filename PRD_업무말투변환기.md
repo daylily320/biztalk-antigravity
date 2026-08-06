@@ -83,7 +83,7 @@ AI도 사람도 "끝"의 기준이 명확해야 헤매지 않습니다. 기준 �
 
 ### 백엔드
 
-- [ ] FastAPI 서버가 로컬에서 정상 실행된다 (`uvicorn main:app`)
+- [ ] FastAPI 서버가 로컬에서 정상 실행된다 (가상환경 활성화 후 `uvicorn main:app` 또는 `uv run uvicorn main:app`)
 - [ ] Health Check 기능이 존재해야 한다
 - [ ] `POST /api/convert` 엔드포인트가 존재한다
 - [ ] Upstage Solar-Pro3 API 호출이 정상 작동한다
@@ -116,7 +116,7 @@ AI도 사람도 "끝"의 기준이 명확해야 헤매지 않습니다. 기준 �
 | 영역 | 기술 | 비고 |
 |------|------|------|
 | 프론트엔드 | HTML5 / CSS3 / JavaScript (ES6+) | 프레임워크 없음 |
-| 백엔드 | Python 3.11+ / FastAPI / Uvicorn | |
+| 백엔드 | Python 3.11+ / FastAPI / Uvicorn | 가상환경 및 패키지 관리에 uv 사용 |
 | AI 연동 | 최신 langchain / langchain-upstage | |
 | AI 모델명 | Upstage `solar-pro3` | |
 | 환경 변수 | python-dotenv | `.env` 파일 관리 |
@@ -129,8 +129,12 @@ AI도 사람도 "끝"의 기준이 명확해야 헤매지 않습니다. 기준 �
 # Python 버전 확인 (3.11 이상)
 python --version
 
-# 패키지 설치
-pip install fastapi uvicorn langchain python-dotenv langchain-upstage
+# uv 설치 확인
+uv --version
+
+# 가상환경 생성 및 패키지 설치
+uv venv
+uv pip install fastapi uvicorn langchain python-dotenv langchain-upstage
 
 # Git 설치 확인
 git --version
@@ -297,7 +301,7 @@ FastAPI는 Swagger UI를 기본 제공하므로 서버가 기동 중인 상태�
 3. `.gitignore` 작성 — `.env` 반드시 포함
 4. Upstage API 키 발급 및 `.env` 파일 작성
 5. `backend/requirements.txt` 작성하고 의존성의 최신 버전(use context7)을 명시해야 함
-6. 가상환경(`.venv`) 폴더를 생성하고 `backend/requirements.txt` 명시된 의존성을 가상환경 폴더에 설치해야 함
+6. `uv`를 사용하여 가상환경(`.venv`) 폴더를 생성하고 `backend/requirements.txt`에 명시된 의존성을 설치해야 함 (`uv venv` 및 `uv pip install -r backend/requirements.txt` 실행)
 
 ---
 
@@ -487,9 +491,9 @@ pydantic
 ### 로컬 실행 명령어
 
 ```bash
-# 백엔드 실행
+# 백엔드 실행 (uv run 사용 권장)
 cd backend
-uvicorn main:app --reload --port 8000
+uv run uvicorn main:app --reload --port 8000
 
 # 프론트엔드 확인
 # frontend/index.html을 브라우저에서 직접 열거나 VS Code Live Server 사용
