@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="업무 말투 변환기(BizTalk Antigravity) - 직장 내 원활한 커뮤니케이션을 위해 상대방에 맞는 비즈니스 말투로 자동 변환해주는 AI 비서 서비스입니다.">
+    <title>업무 말투 변환기 — BizTalk Antigravity</title>
+    <!-- Pretendard Fonts -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
+    <!-- Google Inter Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="background-glow"></div>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo-area">
+                <span class="logo-icon">✨</span>
+                <h1 id="appTitle">BizTalk Antigravity</h1>
+            </div>
+            <p class="subtitle">직장 내 곤란한 순간, 수신 대상에 맞춰 정중하고 확실한 업무 언어로 변환하세요.</p>
+        </header>
+
+        <!-- Main Workspace -->
+        <main class="app-main">
+            <!-- 변환 그리드 레이아웃 -->
+            <div class="workspace-grid">
+                <!-- 원문 입력 구역 (Input Area) -->
+                <section class="card input-card" aria-labelledby="inputSectionTitle">
+                    <h2 id="inputSectionTitle" class="section-title">1. 원문 입력</h2>
+                    <div class="textarea-wrapper">
+                        <textarea id="inputText" placeholder="상사나 동료에게 전달하고 싶은 내용을 자유롭게 작성해 보세요.&#10;예) 내일까지 보고서 마감인데 자료가 부족해서 못 낼 것 같음" maxlength="2000"></textarea>
+                        <div class="char-counter"><span id="charCount">0</span>/2000</div>
+                    </div>
+                </section>
+
+                <!-- 수신 대상 선택 구역 (Target Selection Area) -->
+                <section class="card target-card" aria-labelledby="targetSectionTitle">
+                    <h2 id="targetSectionTitle" class="section-title">2. 수신 대상 선택</h2>
+                    <p class="section-desc">메시지를 받으실 분을 선택해 주세요. 각 대화 상대를 고려한 최적의 톤으로 바뀝니다.</p>
+                    <div class="target-grid" role="group" aria-label="수신 대상 선택">
+                        <button type="button" class="target-btn active" id="btnTargetBoss" data-target="boss">
+                            <span class="btn-icon">👔</span>
+                            <span class="btn-label">상사 / 임원</span>
+                            <span class="btn-desc">격식 있고 공손한 어조</span>
+                        </button>
+                        <button type="button" class="target-btn" id="btnTargetColleague" data-target="colleague">
+                            <span class="btn-icon">🤝</span>
+                            <span class="btn-label">타팀 동료</span>
+                            <span class="btn-desc">정중하고 협조적인 어조</span>
+                        </button>
+                        <button type="button" class="target-btn" id="btnTargetClient" data-target="client">
+                            <span class="btn-icon">💼</span>
+                            <span class="btn-label">고객 / 외부</span>
+                            <span class="btn-desc">친절하고 신뢰감 주는 어조</span>
+                        </button>
+                        <button type="button" class="target-btn" id="btnTargetTeam" data-target="team">
+                            <span class="btn-icon">💬</span>
+                            <span class="btn-label">팀 내 동료</span>
+                            <span class="btn-desc">간결하고 실무적인 어조</span>
+                        </button>
+                    </div>
+                </section>
+
+                <!-- 변환 결과 출력 구역 (Output Area) -->
+                <section class="card output-card" id="outputCard" aria-labelledby="outputSectionTitle">
+                    <!-- 회전하는 AI 글로우 테두리용 컨테이너 -->
+                    <div class="glow-border-effect"></div>
+                    <h2 id="outputSectionTitle" class="section-title">3. 변환 결과</h2>
+                    <div class="textarea-wrapper">
+                        <textarea id="outputText" readonly placeholder="수신 대상을 선택하고 [변환하기] 버튼을 누르면 이 자리에 완성된 비즈니스 텍스트가 나타납니다."></textarea>
+                    </div>
+                    <div class="output-actions">
+                        <button type="button" class="action-btn copy-btn" id="btnCopy" aria-label="결과 복사하기" disabled>
+                            <span class="action-icon">📋</span>
+                            <span class="action-text">결과 복사</span>
+                        </button>
+                    </div>
+                </section>
+            </div>
+
+            <!-- 변환 실행 버튼 구역 -->
+            <div class="submit-area">
+                <button type="button" class="submit-btn" id="btnConvert" aria-describedby="appTitle">
+                    <span class="submit-text">✨ 업무 말투 변환하기</span>
+                    <span class="spinner" id="spinner" aria-hidden="true"></span>
+                </button>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>&copy; 2026 BizTalk Antigravity. Powered by Upstage Solar-Pro3.</p>
+        </footer>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+    <!-- Script Entry Point -->
+    <script src="js/app.js"></script>
+</body>
+</html>
